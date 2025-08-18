@@ -1,5 +1,46 @@
-# A Hybrid Automatic Computer-Aided Diagnosis Framework: Segmentation and classification of Myocardial Infarction from MRI Images
+# Swin-UNet Cardiac MRI Segmentation
+
+This project implements **Swin-UNet** in PyTorch for semantic segmentation of cardiac MRI images.  
+It supports training, validation, and inference with visualization.
+
+---
+
+## Dataset Structure
+
+dataset/
+├── train/ # Training images
+├── trainannot/ # Training masks
+├── val/ # Validation images
+└── valannot/ # Validation masks
 
 
-## Abstract: 
-Early diagnosis of myocardial infarction (MI) is critical for preserving cardiac function and improving patient outcomes through timely intervention. This study proposes an annovaitive computer-aided diagnosis (CAD) system for the simultaneous segmentation and classification of MI using MRI images. The system is evaluated under two primary approaches: a serial approach, where segmentation is first applied to extract image patches for subsequent classification, and a parallel approach, where segmentation and classification are performed concurrently using full MRI images. The multi-class segmentation model identifies four key heart regions: left ventricular cavity (LV), normal myocardium (Myo), myocardial infarction (MI), and persistent microvascular obstruction (MVO). The classification stage employs three AI-based strategies: a single deep learning model, feature-based fusion of multiple AI models, and a hybrid ensemble model incorporating the Vision Transformer (ViT). Both segmentation and classification models are trained and validated on the EMIDEC MRI dataset using five-fold cross-validation. The adopted ResU-Net achieves high F1-scores for segmentation: 91.12% (LV), 88.39% (Myo), 80.08% (MI), and 68.01% (MVO). For classification, the hybrid CNN-ViT model in the parallel approach demonstrates superior performance, achieving 98.15% accuracy and a 98.63% F1-score. These findings highlight the potential of the proposed CAD system for real-world clinical applications, offering a robust tool to assist healthcare professionals in accurate MI diagnosis, improved treatment planning, and enhanced patient care
+## Requirements
+
+Install dependencies:
+
+```bash
+pip install torch torchvision timm albumentations opencv-python matplotlib tqdm
+```
+
+## Training
+
+Run training with:
+
+```bash
+python main_version2.py
+```
+
+## Inference & Visualization
+
+Use the provided script to visualize predictions:
+
+```bash
+from inference_vis import show_dir
+
+show_dir(
+    images_dir="dataset/val",
+    masks_dir="dataset/valannot",
+    weights="progress/SwinUNet_512_best_val_loss.pth",
+    max_items=8
+)
+```
